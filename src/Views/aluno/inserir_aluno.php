@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-6">
                     <label for="id" class="form-label">ID:</label>
-                    <input type="text" name="id" class="form-control">
+                    <input type="number" name="id" class="form-control">
                 </div>
                 <div class="col-6">
                     <select id="turma" name="turma" class="form-select">

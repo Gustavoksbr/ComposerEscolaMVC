@@ -14,7 +14,7 @@ class AlunoDAO{
 
     public function inserir(Aluno $aluno){
         try{
-            $sql = "INSERT INTO aluno VALUES (:id, :nome, :turma)";
+            $sql = "INSERT INTO aluno(id,nome,turma) VALUES (:id, :nome, :turma)";
             $p = $this->conexao->getConexao()->prepare($sql);
             $p->bindValue(":id", $aluno->getId());
             $p->bindValue(":nome", $aluno->getNome());

@@ -14,7 +14,7 @@ class Professor_turmaDAO{
 
     public function inserir(Professor_turma $professor_turma){
         try{
-            $sql = "INSERT INTO professor_turma VALUES ( :id_professor, :id_turma)";
+            $sql = "INSERT INTO professor_turma(id_professor,id_turma) VALUES ( :id_professor, :id_turma)";
             $p = $this->conexao->getConexao()->prepare($sql);
             $p->bindValue(":id_professor", $professor_turma->getId_professor());
             $p->bindValue(":id_turma", $professor_turma->getId_turma());

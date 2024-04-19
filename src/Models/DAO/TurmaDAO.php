@@ -16,7 +16,7 @@ class TurmaDAO{
 
     public function inserir(Turma $turma){
         try{
-            $sql = "INSERT INTO turma VALUES (:id, :turno)";
+            $sql = "INSERT INTO turma(id,turno) VALUES (:id, :turno)";
             $p = $this->conexao->getConexao()->prepare($sql);
             $p->bindValue(":id", $turma->getId());
             $p->bindValue(":turno", $turma->getTurno());

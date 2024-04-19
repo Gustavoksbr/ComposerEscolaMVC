@@ -16,7 +16,7 @@ class ProfessorDAO{
 
     public function inserir(Professor $professor){
         try{
-            $sql = "INSERT INTO professor VALUES (:id, :nome, :materia)";
+            $sql = "INSERT INTO professor(id,nome,materia) VALUES (:id, :nome, :materia)";
             $p = $this->conexao->getConexao()->prepare($sql);
             $p->bindValue(":id", $professor->getId());
             $p->bindValue(":nome", $professor->getNome());
