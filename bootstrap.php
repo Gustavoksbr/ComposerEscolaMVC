@@ -10,7 +10,58 @@ $r = new Php\Primeiroprojeto\Router($metodo, $caminho);
 
 #ROTAS
 
-//INSERIR PROFESSOR
+$lista = ['professor', 'turma', 'aluno', 'professor_turma'];
+
+//inserindo
+foreach ($lista as $item) {
+    $maiusculo = ucfirst($item);
+    $r->get("/$item/inserir", "Php\Primeiroprojeto\Controllers\\{$maiusculo}Controller@inserir");
+}
+
+//novo
+foreach ($lista as $item) {
+    $maiusculo = ucfirst($item);
+    $r->post("/$item/novo", "Php\Primeiroprojeto\Controllers\\{$maiusculo}Controller@novo");
+}
+
+//index
+foreach ($lista as $item){
+    $maiusculo = ucfirst($item);
+    $r->get("/$item", "Php\Primeiroprojeto\Controllers\\{$maiusculo}Controller@index");
+}
+
+//acao
+foreach ($lista as $item){
+    $maiusculo = ucfirst($item);
+    $r->get("/$item/{acao}/{status}", "Php\Primeiroprojeto\Controllers\\{$maiusculo}Controller@index");
+}
+
+//alterar
+foreach ($lista as $item){
+    $maiusculo = ucfirst($item);
+    $r->get("/$item/alterar/id/{id}", "Php\Primeiroprojeto\Controllers\\{$maiusculo}Controller@alterar");
+}
+
+//excluir
+foreach ($lista as $item){
+    $maiusculo = ucfirst($item);
+    $r->get("/$item/excluir/id/{id}", "Php\Primeiroprojeto\Controllers\\{$maiusculo}Controller@excluir");
+}
+
+//editar
+foreach ($lista as $item){
+    $maiusculo = ucfirst($item);
+    $r->get("/$item/editar", "Php\Primeiroprojeto\Controllers\\{$maiusculo}Controller@editar");
+}
+
+//deletar
+foreach ($lista as $item){
+    $maiusculo = ucfirst($item);
+    $r->get("/$item/deletar", "Php\Primeiroprojeto\Controllers\\{$maiusculo}Controller@deletar");
+}
+
+
+/* //INSERIR PROFESSOR
 $r->get('/professor/inserir',
     'Php\Primeiroprojeto\Controllers\ProfessorController@inserir');
 
@@ -37,6 +88,9 @@ $r->get('/professor_turma/inserir',
 
 $r->post('/professor_turma/novo',
     'Php\Primeiroprojeto\Controllers\Professor_turmaController@novo');
+
+ */
+
 
 
 
