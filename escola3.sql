@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 14/04/2024 às 02:03
+-- Tempo de geração: 19/04/2024 às 08:26
 -- Versão do servidor: 10.4.28-MariaDB
 -- Versão do PHP: 8.0.28
 
@@ -33,6 +33,17 @@ CREATE TABLE `aluno` (
   `turma` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `aluno`
+--
+
+INSERT INTO `aluno` (`id`, `nome`, `turma`) VALUES
+(5, 'Orlando', 1),
+(9, 'Carla', 2),
+(33, 'Maria', 3),
+(111, 'alfredo', 45),
+(12345, 'gustavoksbr', 45);
+
 -- --------------------------------------------------------
 
 --
@@ -50,7 +61,10 @@ CREATE TABLE `professor` (
 --
 
 INSERT INTO `professor` (`id`, `materia`, `nome`) VALUES
-(123, 'jose', 'matematica');
+(1, 'Engenharia de Software', 'Alvaro'),
+(2, 'fisica', 'Mauricio'),
+(3, 'php', 'Vanessa'),
+(4, 'xadrez', 'Pananu');
 
 -- --------------------------------------------------------
 
@@ -63,6 +77,20 @@ CREATE TABLE `professor_turma` (
   `id_turma` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `professor_turma`
+--
+
+INSERT INTO `professor_turma` (`id_professor`, `id_turma`) VALUES
+(1, 2),
+(2, 3),
+(1, 1),
+(1, 45),
+(4, 1),
+(4, 2),
+(3, 1),
+(3, 3);
+
 -- --------------------------------------------------------
 
 --
@@ -73,6 +101,16 @@ CREATE TABLE `turma` (
   `id` int(11) NOT NULL,
   `turno` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `turma`
+--
+
+INSERT INTO `turma` (`id`, `turno`) VALUES
+(1, 'manha'),
+(2, 'tarde'),
+(3, 'manha'),
+(45, 'noite');
 
 --
 -- Índices para tabelas despejadas
