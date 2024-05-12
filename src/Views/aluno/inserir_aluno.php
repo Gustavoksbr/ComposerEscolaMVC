@@ -12,15 +12,16 @@
         <form action="/aluno/novo" method="post">
             <div class="row">
                 <div class="col-6">
-                    <label for="nome" class="form-label">Nome:</label>
-                    <input type="text" name="nome" class="form-control">
-                </div>
-                <div class="col-6">
                     <label for="id" class="form-label">ID:</label>
-                    <input type="number" name="id" class="form-control">
+                    <input type="number" name="id" class="form-control" >
                 </div>
                 <div class="col-6">
-                    <select id="turma" name="turma" class="form-select">
+                    <label for="nome" class="form-label">Nome:</label>
+                    <input type="text" name="nome" class="form-control" required>
+                </div>
+                <div class="col-6">
+                <label for="turma" class="form-label">ID da turma:</label>
+                    <select id="turma" name="turma" class="form-select" required>
                         <option selected>Selecione</option>
                     <?php
                     if($dados != null){ #$dados foi uma variavel definida no controller
@@ -32,13 +33,12 @@
                     </select>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <button type="submit" class="btn btn-primary">
-                        Salvar
-                    </button>
-                </div>
-            </div>
+            <button type="submit" class="btn btn-primary">
+                Salvar
+            </button>
+            <a href="/aluno" class="btn btn-secondary">
+                Voltar
+            </a>
         </form>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

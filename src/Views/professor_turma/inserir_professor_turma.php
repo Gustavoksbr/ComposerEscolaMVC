@@ -12,7 +12,7 @@
         <form action="/professor_turma/novo" method="post">
             <div class="row">
                 <div class="col-6">
-                    <select id="id_professor" name="id_professor" class="form-select">
+                    <select id="id_professor" name="id_professor" class="form-select" required>
                         <option selected>Selecione</option>
                     <?php
                     if($dados_p != null){ #$dados foi uma variavel definida no controller
@@ -24,7 +24,7 @@
                     </select>
                 </div>
                 <div class="col-6">
-                    <select id="id_turma" name="id_turma" class="form-select">
+                    <select id="id_turma" name="id_turma" class="form-select" required>
                         <option selected>Selecione</option>
                     <?php
                     if($dados_t != null){ #$dados foi uma variavel definida no controller
@@ -36,13 +36,12 @@
                     </select>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <button type="submit" class="btn btn-primary">
-                        Salvar
-                    </button>
-                </div>
-            </div>
+            <button type="submit" class="btn btn-primary">
+                Salvar
+            </button>
+            <a href="/professor_turma" class="btn btn-secondary">
+                Voltar
+            </a>
         </form>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

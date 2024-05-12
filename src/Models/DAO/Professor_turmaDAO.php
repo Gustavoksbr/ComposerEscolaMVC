@@ -24,4 +24,39 @@ class Professor_turmaDAO{
         }
     }
 
+    public function excluir($id_p,$id_t){
+        try{
+            $sql = "DELETE FROM professor_turma WHERE id_professor = :id_p AND id_turma = :id_t";
+            $p = $this->conexao->getConexao()->prepare($sql);
+            $p->bindValue(":id_p", $id_p);
+            $p->bindValue(":id_t", $id_t);
+            return $p->execute();
+        } catch(\Exception $e){
+            return 0;
+        }
+    }
+
+    public function consultar($id_p, $id_t){
+        try{
+            $sql = "SELECT * FROM professor_turma WHERE id_professor = :id_p AND id_turma = :id_t";
+            $p = $this->conexao->getConexao()->prepare($sql);
+            $p->bindValue(":id_professor", $id_p);
+            $p->bindValue(":id_turma", $id_t);
+            $p->execute();
+            return $p->fetch();
+        } catch(\Exception $e){
+            return 0;
+        }
+    }
+
+    public function consultarTodos()
+    {
+        try{
+            $sql = "SELECT * FROM professor_turma";
+            return $this->conexao->getConexao()->query($sql);
+        } catch(\Exception $e){
+            return 0;
+        }
+    }
+
 }

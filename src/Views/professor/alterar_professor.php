@@ -6,28 +6,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>Inserir Professor</title>
+    <title>Alterar Professor</title>
 </head>
 
 <body>
     <main class="container">
-        <h3>Inserir Professor</h3>
-        <form action="/professor/novo" method="post">
+        <h3>Alterar Professor</h3>
+        <form action="/professor/alterando" method="post">
+            <input type="hidden" name="id" value="<?= $resultado["id"] ?>">
             <div class="row">
-
                 <div class="col-6">
                     <label for="id" class="form-label">ID:</label>
-                    <input type="number" name="id" class="form-control">
+                    <input type="text" name="id" class="form-control" value="<?= $resultado['id'] ?>" disabled>
                 </div>
                 <div class="col-6">
                     <label for="nome" class="form-label">Nome:</label>
-                    <input type="text" name="nome" class="form-control" required>
+                    <input type="text" name="nome" class="form-control" value="<?= $resultado['nome'] ?>">
                 </div>
                 <div class="col-6">
-                    <label for="materia" class="form-label">Matéria:</label>
-                    <input type="text" name="materia" class="form-control" required>
+                    <label for="materia" class="form-label">Materia:</label>
+                    <input type="text" name="materia" class="form-control" value="<?= $resultado['materia'] ?>">
                 </div>
             </div>
+            <br>
             <button type="submit" class="btn btn-primary">
                 Salvar
             </button>

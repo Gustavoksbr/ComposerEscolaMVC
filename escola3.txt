@@ -1,32 +1,35 @@
+CREATE DATABASE escola3;
+
+USE escola3;
+
 CREATE TABLE turma
 (
-	id INT NOT NULL PRIMARY KEY,
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	nome VARCHAR(30) NOT NULL,
 	turno VARCHAR(15) NOT NULL
 );
 
 CREATE TABLE professor
 (
-	id INT NOT NULL PRIMARY KEY,
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	nome VARCHAR(40) NOT NULL,
 	materia VARCHAR(30) NOT NULL
-	
 );
 
 
 CREATE TABLE professor_turma
 (
-    id_professor INT NOT NULL,
-    id_turma INT NOT NULL,
+    id_professor INT NOT NULL ,
+    id_turma INT NOT NULL ,
     FOREIGN KEY (id_professor) REFERENCES professor(id),
-    FOREIGN KEY (id_turma) REFERENCES turma(id)
+    FOREIGN KEY (id_turma) REFERENCES turma(id),
+	PRIMARY KEY (id_professor, id_turma)
 );
 
 CREATE TABLE aluno
 (
-	id INT NOT NULL PRIMARY KEY,
-    	nome VARCHAR(40) NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(40) NOT NULL,
 	turma INT NOT NULL,
 	FOREIGN KEY (turma) REFERENCES turma(id)
 );
-
-22:25:59	INSERT INTO contrato(numero,cliente_cpf_cnpj,data_inicio,data_fim,qtd_corretores,qtd_parcelas,valor,veiculo_placa) VALUES (4,"123",2021-01-01,2025-01-01,0,5,1000,"placateste")	1 row(s) affected, 2 warning(s): 1265 Data truncated for column 'data_inicio' at row 1 1265 Data truncated for column 'data_fim' at row 1	0.172 sec

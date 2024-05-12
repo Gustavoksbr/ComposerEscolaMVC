@@ -4,7 +4,7 @@ namespace Php\Primeiroprojeto\Models\DAO;
 
 use Php\Primeiroprojeto\Models\Domain\Professor;
 
-use PDO;
+
 
 class ProfessorDAO{
 
@@ -27,12 +27,50 @@ class ProfessorDAO{
         }
     }
 
-    public function consultar()
+    public function alterar(Professor $professor){
+        try{
+            $sql = "UPDATE professor SET nome = :nome, materia = :materia
+                    WHERE id = :id";
+            $p = $this->conexao->getConexao()->prepare($sql);
+            $p->bindValue(":id", $professor->getId());
+            $p->bindValue(":nome", $professor->getNome());
+            $p->bindValue(":materia", $professor->getMateria());
+            return $p->execute();
+        }catch(\Exception $e){
+            return 0;
+        }
+    }
+
+    public function excluir($id){
+        try{
+            $sql = "DELETE FROM professor WHERE id = :id";
+            $p = $this->conexao->getConexao()->prepare($sql);
+            $p->bindValue(":id", $id);
+            return $p->execute();
+        } catch(\Exception $e){
+            return 0;
+        }
+    }
+
+    public function consultar($id){
+        try{
+            $sql = "SELECT * FROM professor WHERE id = :id";
+            $p = $this->conexao->getConexao()->prepare($sql);
+            $p->bindValue(":id", $id);
+            $p->execute();
+            return $p->fetch();
+        } catch(\Exception $e){
+            return 0;
+        }
+    }
+
+    public function consultarTodos()
     {
-
+        try{
             $sql = "SELECT * FROM professor";
-            $stm = $this->conexao->getConexao()->query($sql);
-            return $stm->fetchAll(PDO::FETCH_ASSOC);
-
+            return $this->conexao->getConexao()->query($sql);
+        } catch(\Exception $e){
+            return 0;
+        }
     }
 }

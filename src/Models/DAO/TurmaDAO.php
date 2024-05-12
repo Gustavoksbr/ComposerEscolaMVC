@@ -4,8 +4,6 @@ namespace Php\Primeiroprojeto\Models\DAO;
 
 use Php\Primeiroprojeto\Models\Domain\Turma;
 
-use PDO;
-
 class TurmaDAO{
 
     private Conexao $conexao;
@@ -16,23 +14,59 @@ class TurmaDAO{
 
     public function inserir(Turma $turma){
         try{
-            $sql = "INSERT INTO turma(id,turno) VALUES (:id, :turno)";
+            $sql = "INSERT INTO turma(id,nome,turno) VALUES (:id, :nome, :turno)";
             $p = $this->conexao->getConexao()->prepare($sql);
             $p->bindValue(":id", $turma->getId());
+            $p->bindValue(":nome", $turma->getNome());
             $p->bindValue(":turno", $turma->getTurno());
             return $p->execute();
         } catch(\Exception $e){
             return 0;
         }
     }
+    public function alterar(Turma $turma){
+        try{
+            $sql = "UPDATE turma SET nome = :nome, turno = :turno
+                    WHERE id = :id";
+            $p = $this->conexao->getConexao()->prepare($sql);
+            $p->bindValue(":id", $turma->getId());
+            $p->bindValue(":nome", $turma->getNome());
+            $p->bindValue(":turno", $turma->getTurno());
+            return $p->execute();
+        }catch(\Exception $e){
+            return 0;
+        }
+    }
 
-    public function consultar()
+    public function excluir($id){
+        try{
+            $sql = "DELETE FROM turma WHERE id = :id";
+            $p = $this->conexao->getConexao()->prepare($sql);
+            $p->bindValue(":id", $id);
+            return $p->execute();
+        } catch(\Exception $e){
+            return 0;
+        }
+    }
+    public function consultar($id){
+        try{
+            $sql = "SELECT * FROM turma WHERE id = :id";
+            $p = $this->conexao->getConexao()->prepare($sql);
+            $p->bindValue(":id", $id);
+            $p->execute();
+            return $p->fetch();
+        } catch(\Exception $e){
+            return 0;
+        }
+    }    
+    public function consultarTodos()
     {
-
+        try{
             $sql = "SELECT * FROM turma";
-            $stm = $this->conexao->getConexao()->query($sql);
-            return $stm->fetchAll(PDO::FETCH_ASSOC);
-
+            return $this->conexao->getConexao()->query($sql);
+        } catch(\Exception $e){
+            return 0;
+        }
     }
 
 }
