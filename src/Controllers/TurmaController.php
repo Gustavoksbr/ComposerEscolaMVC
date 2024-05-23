@@ -21,12 +21,6 @@ class TurmaController
         } else {
             $pesquisa = $_POST['pesquisa'];
             $resultado = $turmaDAO->pesquisar($pesquisa);
-            if ($pesquisa != "") {
-                if ($resultado) {
-                    $mensagem = "Encontrado" . sizeof($resultado) . " registros!";
-                } else
-                    $mensagem = "Nenhum registro encontrado!";
-            }
         }
 
         //inserir
@@ -44,6 +38,9 @@ class TurmaController
             $mensagem = "Registro excluído com sucesso!";
         elseif ($acao == "excluir" && $status == "false")
             $mensagem = "Erro ao excluir!";
+        else
+            $mensagem = "Encontrado ".sizeof($resultado). " registros";
+
 
         require_once ("../src/Views/turma/turma.php");
     }

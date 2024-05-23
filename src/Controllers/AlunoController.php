@@ -40,7 +40,7 @@ class AlunoController
         elseif ($acao == "excluir" && $status == "false")
             $mensagem = "Erro ao excluir!";
         else
-        $mensagem = "Encontrado ".sizeof($resultado). " registros";
+            $mensagem = "Encontrado ".sizeof($resultado). " registros";
 
         require_once ("../src/Views/aluno/aluno.php");
     }
