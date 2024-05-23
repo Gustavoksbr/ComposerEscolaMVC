@@ -9,10 +9,19 @@ class ProfessorController
 {
     public function index($params)
     {
+        $mensagem = "";
+        $pesquisa = "";
         $professorDAO = new ProfessorDAO();
-        $resultado = $professorDAO->consultarTodos();
         $acao = $params[1] ?? "";
         $status = $params[2] ?? "";
+
+        if (!isset($_POST['pesquisa'])) {
+            $resultado = $professorDAO->consultarTodos();
+        } else {
+            $pesquisa = $_POST['pesquisa'];
+            $resultado = $professorDAO->pesquisar($pesquisa);
+        }
+        
         if ($acao == "inserir" && $status == "true")
             $mensagem = "Registro inserido com sucesso!";
         elseif ($acao == "inserir" && $status == "false")
@@ -26,19 +35,20 @@ class ProfessorController
         elseif ($acao == "excluir" && $status == "false")
             $mensagem = "Erro ao excluir!";
         else
-            $mensagem = "";
+            $mensagem = "Encontrado ".sizeof($resultado). " registros";
         require_once ("../src/Views/professor/professor.php");
     }
 
-    public function inserir($params){
-        require_once("../src/Views/professor/inserir_professor.html");
+    public function inserir($params)
+    {
+        require_once ("../src/Views/professor/inserir_professor.html");
     }
 
     public function novo($params)
     {
-        $professor = new Professor($_POST['id'], $_POST['nome'],$_POST['materia']);
+        $professor = new Professor($_POST['id'], $_POST['nome'], $_POST['materia']);
         $professorDAO = new ProfessorDAO();
-        if ($professorDAO->inserir($professor)){
+        if ($professorDAO->inserir($professor)) {
             header("location: /professor/inserir/true");
         } else {
             header("location: /professor/inserir/false");

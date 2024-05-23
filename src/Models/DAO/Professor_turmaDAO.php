@@ -4,6 +4,8 @@ namespace Php\Primeiroprojeto\Models\DAO;
 
 use Php\Primeiroprojeto\Models\Domain\Professor_turma;
 
+use PDO;
+
 class Professor_turmaDAO{
 
     private Conexao $conexao;
@@ -53,7 +55,21 @@ class Professor_turmaDAO{
     {
         try{
             $sql = "SELECT * FROM professor_turma";
-            return $this->conexao->getConexao()->query($sql);
+            return $this->conexao->getConexao()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+        } catch(\Exception $e){
+            return 0;
+        }
+    }
+
+    public function pesquisar($substring)
+    {
+        try{
+            $sql = "SELECT * FROM professor_turma WHERE CONCAT(id_professor,id_turma) LIKE :substring;";
+            $p = $this->conexao->getConexao()->prepare($sql);
+            $p->bindValue(':substring', '%' . $substring . '%', PDO::PARAM_STR);
+            $p->execute();
+            return $p->fetchAll(PDO::FETCH_ASSOC);
+            
         } catch(\Exception $e){
             return 0;
         }

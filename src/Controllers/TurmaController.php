@@ -9,24 +9,42 @@ class TurmaController
 {
     public function index($params)
     {
+        $mensagem = "";
+        $pesquisa = "";
         $turmaDAO = new TurmaDAO();
-        $resultado = $turmaDAO->consultarTodos();
+
         $acao = $params[1] ?? "";
         $status = $params[2] ?? "";
+
+        if (!isset($_POST['pesquisa'])) {
+            $resultado = $turmaDAO->consultarTodos();
+        } else {
+            $pesquisa = $_POST['pesquisa'];
+            $resultado = $turmaDAO->pesquisar($pesquisa);
+            if ($pesquisa != "") {
+                if ($resultado) {
+                    $mensagem = "Encontrado" . sizeof($resultado) . " registros!";
+                } else
+                    $mensagem = "Nenhum registro encontrado!";
+            }
+        }
+
+        //inserir
         if ($acao == "inserir" && $status == "true")
             $mensagem = "Registro inserido com sucesso!";
         elseif ($acao == "inserir" && $status == "false")
             $mensagem = "Erro ao inserir!";
+        //alterar
         elseif ($acao == "alterar" && $status == "true")
             $mensagem = "Registro alterado com sucesso!";
         elseif ($acao == "alterar" && $status == "false")
             $mensagem = "Erro ao alterar!";
+        //excluir
         elseif ($acao == "excluir" && $status == "true")
             $mensagem = "Registro excluído com sucesso!";
         elseif ($acao == "excluir" && $status == "false")
             $mensagem = "Erro ao excluir!";
-        else
-            $mensagem = "";
+
         require_once ("../src/Views/turma/turma.php");
     }
 

@@ -6,16 +6,25 @@ use Php\Primeiroprojeto\Models\DAO\professor_turmaDAO;
 use Php\Primeiroprojeto\Models\Domain\professor_turma;
 use Php\Primeiroprojeto\Models\DAO\professorDAO;
 use Php\Primeiroprojeto\Models\DAO\turmaDAO;
-use PDO;
+
 
 class Professor_turmaController{
 
     public function index($params)
     {
-        $professorDAO = new Professor_turmaDAO();
-        $resultado = $professorDAO->consultarTodos();
+        $mensagem = "";
+        $pesquisa = "";
+        $professor_turmaDAO = new Professor_turmaDAO();
+        
         $acao = $params[1] ?? "";
         $status = $params[2] ?? "";
+
+        if (!isset($_POST['pesquisa'])) {
+            $resultado = $professor_turmaDAO->consultarTodos();
+        } else {
+            $pesquisa = $_POST['pesquisa'];
+            $resultado = $professor_turmaDAO->pesquisar($pesquisa);
+        }
         if ($acao == "inserir" && $status == "true")
             $mensagem = "Registro inserido com sucesso!";
         elseif ($acao == "inserir" && $status == "false")
@@ -25,20 +34,20 @@ class Professor_turmaController{
         elseif ($acao == "excluir" && $status == "false")
             $mensagem = "Erro ao excluir!";
         else
-            $mensagem = "";
+            $mensagem = "Encontrado ".sizeof($resultado). " registros";
         require_once ("../src/Views/professor_turma/professor_turma.php");
     }
     public function consultarProfessores()
     {
         $professorDAO = new ProfessorDAO();
         $listadados = $professorDAO->consultarTodos();
-        return $listadados->fetchAll(PDO::FETCH_ASSOC);
+        return $listadados;
     }
     public function consultarTurmas()
     {
         $turmaDAO = new TurmaDAO();
         $listadados = $turmaDAO->consultarTodos();
-        return $listadados->fetchAll(PDO::FETCH_ASSOC);
+        return $listadados;
     }
 
     

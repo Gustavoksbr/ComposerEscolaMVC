@@ -4,6 +4,8 @@ namespace Php\Primeiroprojeto\Models\DAO;
 
 use Php\Primeiroprojeto\Models\Domain\Turma;
 
+use PDO;
+
 class TurmaDAO{
 
     private Conexao $conexao;
@@ -63,7 +65,22 @@ class TurmaDAO{
     {
         try{
             $sql = "SELECT * FROM turma";
-            return $this->conexao->getConexao()->query($sql);
+            return $this->conexao->getConexao()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+            
+        } catch(\Exception $e){
+            return 0;
+        }
+    }
+
+    public function pesquisar($substring)
+    {
+        try{
+            $sql = "SELECT * FROM turma WHERE CONCAT(id,nome,turno) LIKE :substring;";
+            $p = $this->conexao->getConexao()->prepare($sql);
+            $p->bindValue(':substring', '%' . $substring . '%', PDO::PARAM_STR);
+            $p->execute();
+            return $p->fetchAll(PDO::FETCH_ASSOC);
+            
         } catch(\Exception $e){
             return 0;
         }

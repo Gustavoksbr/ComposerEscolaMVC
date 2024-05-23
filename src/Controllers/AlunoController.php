@@ -5,17 +5,28 @@ namespace Php\Primeiroprojeto\Controllers;
 use Php\Primeiroprojeto\Models\DAO\alunoDAO;
 use Php\Primeiroprojeto\Models\Domain\aluno;
 use Php\Primeiroprojeto\Models\DAO\TurmaDAO;
-use PDO;
 
 
-class AlunoController{
+
+class AlunoController
+{
 
     public function index($params)
     {
+        $mensagem = "";
+        $pesquisa = "";
         $alunoDAO = new AlunoDAO();
-        $resultado = $alunoDAO->consultarTodos();
+
         $acao = $params[1] ?? "";
         $status = $params[2] ?? "";
+
+        if (!isset($_POST['pesquisa'])) {
+            $resultado = $alunoDAO->consultarTodos();
+        } else {
+            $pesquisa = $_POST['pesquisa'];
+            $resultado = $alunoDAO->pesquisar($pesquisa);
+        }
+
         if ($acao == "inserir" && $status == "true")
             $mensagem = "Registro inserido com sucesso!";
         elseif ($acao == "inserir" && $status == "false")
@@ -29,7 +40,8 @@ class AlunoController{
         elseif ($acao == "excluir" && $status == "false")
             $mensagem = "Erro ao excluir!";
         else
-            $mensagem = "";
+        $mensagem = "Encontrado ".sizeof($resultado). " registros";
+
         require_once ("../src/Views/aluno/aluno.php");
     }
 
@@ -37,33 +49,37 @@ class AlunoController{
     {
         $turmaDAO = new TurmaDAO();
         $listadados = $turmaDAO->consultarTodos();
-        return $listadados->fetchAll(PDO::FETCH_ASSOC);
-    }
-    
-    public function inserir($params){
-        $dados = $this->consultarTurmas();
-        require_once("../src/Views/aluno/inserir_aluno.php");
+        return $listadados;
     }
 
-    public function novo($params){
-        $aluno = new Aluno($_POST['id'], $_POST['nome'],$_POST['turma']);
+    public function inserir($params)
+    {
+        $dados = $this->consultarTurmas();
+        require_once ("../src/Views/aluno/inserir_aluno.php");
+    }
+
+    public function novo($params)
+    {
+        $aluno = new Aluno($_POST['id'], $_POST['nome'], $_POST['turma']);
         $alunoDAO = new AlunoDAO();
-        if ($alunoDAO->inserir($aluno)){
+        if ($alunoDAO->inserir($aluno)) {
             header("location: /aluno/inserir/true");
         } else {
             header("location: /aluno/inserir/false");
         }
     }
 
-    public function alterar($params){
+    public function alterar($params)
+    {
         $alunoDAO = new alunoDAO();
         $resultado = $alunoDAO->consultar($params[1]);
         $dados = $this->consultarTurmas();
-        require_once("../src/Views/aluno/alterar_aluno.php");
+        require_once ("../src/Views/aluno/alterar_aluno.php");
     }
-    
-    public function alterando($params){
-        $aluno = new Aluno($_POST['id'], $_POST['nome'],$_POST['turma']);
+
+    public function alterando($params)
+    {
+        $aluno = new Aluno($_POST['id'], $_POST['nome'], $_POST['turma']);
         $alunoDAO = new AlunoDAO();
         if ($alunoDAO->alterar($aluno)) {
             header("location: /aluno/alterar/true");
@@ -72,16 +88,18 @@ class AlunoController{
         }
     }
 
-    public function excluir($params){
+    public function excluir($params)
+    {
         $alunoDAO = new AlunoDAO();
         $resultado = $alunoDAO->consultar($params[1]);
-        require_once("../src/Views/aluno/excluir_aluno.php");
+        require_once ("../src/Views/aluno/excluir_aluno.php");
     }
 
 
-    public function excluindo($params){
+    public function excluindo($params)
+    {
         $alunoDAO = new AlunoDAO();
-        if ($alunoDAO->excluir($_POST['id'])){
+        if ($alunoDAO->excluir($_POST['id'])) {
             header("location: /aluno/excluir/true");
         } else {
             header("location: /aluno/excluir/false");

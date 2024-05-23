@@ -15,6 +15,12 @@
         <p><?= $mensagem ?></p>
         <a href="/aluno/inserir" class="btn btn-primary">Novo Aluno</a>
         <a href="/home" class="btn btn-secondary">Voltar</a>
+        <br>
+        <br>
+        <form action="/aluno" method="POST">
+            <input type="text" name="pesquisa" value="<?= $pesquisa?>" />
+            <button>Pesquisar</button>
+        </form>
         <table class="table table-stripped table-hover" id="tabela">
             <thead>
                 <tr>
@@ -25,7 +31,7 @@
             </thead>
             <tbody>
                 <?php
-                while ($c = $resultado->fetch(PDO::FETCH_ASSOC)) {
+                 foreach($resultado as $c) {
                     ?>
                     <tr>
                         <td><?= $c['id'] ?></td>

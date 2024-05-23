@@ -32,6 +32,11 @@ foreach ($lista as $item){
     $r->get("/$item", "Php\Primeiroprojeto\Controllers\\{$maiusculo}Controller@index");
 }
 
+foreach ($lista as $item){
+    $maiusculo = ucfirst($item);
+    $r->post("/$item", "Php\Primeiroprojeto\Controllers\\{$maiusculo}Controller@index");
+}
+
 //acao
 foreach ($lista as $item){
     $maiusculo = ucfirst($item);
@@ -70,6 +75,12 @@ foreach ($lista as $item){
     $r->post("/$item/excluindo", "Php\Primeiroprojeto\Controllers\\{$maiusculo}Controller@excluindo");
 }
 
+//pesquisar
+/* foreach ($lista as $item){
+    $maiusculo = ucfirst($item);
+    $r->get("/$item/pesquisar", "Php\Primeiroprojeto\Controllers\\{$maiusculo}Controller@pesquisar");
+}
+ */
 
 /* //INSERIR PROFESSOR
 $r->get('/professor/inserir',
@@ -117,6 +128,3 @@ if ($resultado instanceof Closure){
     $resultado = $resultado[1];
     echo $controller->$resultado($r->getParams());
 }
-
-
-

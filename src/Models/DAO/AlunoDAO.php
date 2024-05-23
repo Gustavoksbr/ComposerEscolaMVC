@@ -4,6 +4,8 @@ namespace Php\Primeiroprojeto\Models\DAO;
 
 use Php\Primeiroprojeto\Models\Domain\Aluno;
 
+use PDO;
+
 class AlunoDAO{
 
     private Conexao $conexao;
@@ -66,9 +68,22 @@ class AlunoDAO{
     {
         try{
             $sql = "SELECT * FROM aluno";
-            return $this->conexao->getConexao()->query($sql);
+            return $this->conexao->getConexao()->query($sql)->fetchAll(PDO::FETCH_ASSOC);
         } catch(\Exception $e){
             return 0;
+        }
+    }
+
+    public function pesquisar($substring)
+    {
+        try{
+            $sql = "SELECT * FROM aluno WHERE CONCAT(id,nome,turma) LIKE :substring;";
+            $p = $this->conexao->getConexao()->prepare($sql);
+            $p->bindValue(':substring', '%' . $substring . '%', PDO::PARAM_STR);
+            $p->execute();
+            return $p->fetchAll(PDO::FETCH_ASSOC);
+        } catch(\Exception $e){
+            return false;
         }
     }
 
