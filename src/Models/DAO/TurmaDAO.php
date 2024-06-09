@@ -28,12 +28,14 @@ class TurmaDAO{
     }
     public function alterar(Turma $turma){
         try{
-            $sql = "UPDATE turma SET nome = :nome, turno = :turno
-                    WHERE id = :id";
+            $sql = "UPDATE turma SET id = :idnovo, nome = :nome, turno = :turno
+                    WHERE id = :idantigo";
             $p = $this->conexao->getConexao()->prepare($sql);
-            $p->bindValue(":id", $turma->getId());
+            $p->bindValue(":idnovo", $turma->getId());
             $p->bindValue(":nome", $turma->getNome());
             $p->bindValue(":turno", $turma->getTurno());
+            $p->bindValue(":idantigo",$_SESSION['idantigo']);
+            unset($_SESSION['idantigo']);
             return $p->execute();
         }catch(\Exception $e){
             return 0;

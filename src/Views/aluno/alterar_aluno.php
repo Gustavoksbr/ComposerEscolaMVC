@@ -13,24 +13,39 @@
     <main class="container">
         <h3>Alterar Aluno</h3>
         <form action="/aluno/alterando" method="post">
-            <input type="hidden" name="id" value="<?= $resultado["id"] ?>">
             <div class="row">
+                <input type="number" name="idoriginal" class="form-control" value="<?= $resultado["id"] ?>" hidden>
                 <div class="col-6">
                     <label for="id" class="form-label">ID:</label>
-                    <input type="text" name="id" class="form-control" value="<?= $resultado['id'] ?>" disabled>
+                    <select id="id" name="id" class="form-select" required>
+                        <option selected><?= $resultado["id"] ?></option>
+                        <?php
+                        $listaid = [];
+                        foreach ($alunos as $d) { #$alunos foi uma variavel definida no controller
+                            array_push($listaid, $d['id']);
+                        }
+                        for ($i = 1; $i <= 1000; $i++) {
+                            if (!in_array($i, $listaid)) {
+                                echo "<option>{$i}</option>";
+                            }
+                        }
+
+                        ?>
+                    </select>
                 </div>
+
                 <div class="col-6">
                     <label for="nome" class="form-label">Nome:</label>
                     <input type="text" name="nome" class="form-control" value="<?= $resultado['nome'] ?>">
                 </div>
                 <div class="col-6">
                     <label for="turma" class="form-label">ID da turma:</label>
-                    <select id="turma" name="turma" class="form-select">
+                    <select id="turma" name="turma" class="form-select" required>
                         <option selected><?= $resultado['turma'] ?></option>
                         <?php
                         if ($dados != null) { #$dados foi uma variavel definida no controller
                             foreach ($dados as $d) {
-                                echo "<option value=\"{$d['id']}\">{$d['id']}</option>";
+                                echo "<option>{$d['id']}</option>";
                             }
                         }
                         ?>

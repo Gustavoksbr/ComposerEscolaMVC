@@ -13,11 +13,11 @@
             <div class="row">
                 <div class="col-6">
                     <select id="id_professor" name="id_professor" class="form-select" required>
-                        <option selected>Selecione</option>
+                        <option selected value="">Selecione</option>
                     <?php
                     if($dados_p != null){ #$dados foi uma variavel definida no controller
                         foreach ($dados_p as $d){
-                            echo "<option value=\"{$d['id']}\">{$d['id']}</option>";
+                            echo "<option>{$d['id']}</option>";
                         }
                       }
                       ?>
@@ -25,11 +25,11 @@
                 </div>
                 <div class="col-6">
                     <select id="id_turma" name="id_turma" class="form-select" required>
-                        <option selected>Selecione</option>
+                        <option selected value="">Selecione</option>
                     <?php
                     if($dados_t != null){ #$dados foi uma variavel definida no controller
                         foreach ($dados_t as $d){
-                            echo "<option value=\"{$d['id']}\">{$d['id']}</option>";
+                            echo "<option>{$d['id']}</option>";
                         }
                       }
                       ?>

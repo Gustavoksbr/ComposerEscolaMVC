@@ -47,7 +47,9 @@ class TurmaController
 
     public function inserir($params)
     {
-        require_once ("../src/Views/turma/inserir_turma.html");
+        $turmaDAO = new TurmaDAO;
+        $dados = $turmaDAO->consultarTodos();
+        require_once ("../src/Views/turma/inserir_turma.php");
     }
 
     public function novo($params)
@@ -70,6 +72,8 @@ class TurmaController
     {
         $turma = new Turma($_POST['id'], $_POST['nome'], $_POST['turno']);
         $turmaDAO = new TurmaDAO();
+        session_start();
+        $_SESSION['idantigo']=$_POST['idoriginal'];
         if ($turmaDAO->alterar($turma)) {
             header("location: /turma/alterar/true");
         } else {

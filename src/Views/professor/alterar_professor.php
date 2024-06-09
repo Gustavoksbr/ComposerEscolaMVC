@@ -15,9 +15,24 @@
         <form action="/professor/alterando" method="post">
             <input type="hidden" name="id" value="<?= $resultado["id"] ?>">
             <div class="row">
+                <input type="number" name="idoriginal" class="form-control" value="<?= $resultado["id"] ?>" hidden>
                 <div class="col-6">
                     <label for="id" class="form-label">ID:</label>
-                    <input type="text" name="id" class="form-control" value="<?= $resultado['id'] ?>" disabled>
+                    <select id="id" name="id" class="form-select" required>
+                        <option selected><?= $resultado["id"] ?></option>
+                        <?php
+                        $listaid = [];
+                        foreach ($professores as $d) { #$professores foi uma variavel definida no controller
+                            array_push($listaid, $d['id']);
+                        }
+                        for ($i = 1; $i <= 1000; $i++) {
+                            if (!in_array($i, $listaid)) {
+                                echo "<option>{$i}</option>";
+                            }
+                        }
+
+                        ?>
+                    </select>
                 </div>
                 <div class="col-6">
                     <label for="nome" class="form-label">Nome:</label>

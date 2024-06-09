@@ -10,7 +10,6 @@ use Php\Primeiroprojeto\Models\DAO\TurmaDAO;
 
 class AlunoController
 {
-
     public function index($params)
     {
         $mensagem = "";
@@ -19,7 +18,6 @@ class AlunoController
 
         $acao = $params[1] ?? "";
         $status = $params[2] ?? "";
-
         if (!isset($_POST['pesquisa'])) {
             $resultado = $alunoDAO->consultarTodos();
         } else {
@@ -54,7 +52,9 @@ class AlunoController
 
     public function inserir($params)
     {
-        $dados = $this->consultarTurmas();
+        $alunoDAO = new AlunoDAO;
+        $dados = $alunoDAO->consultarTodos();
+        $dadost = $this->consultarTurmas();
         require_once ("../src/Views/aluno/inserir_aluno.php");
     }
 
@@ -73,6 +73,7 @@ class AlunoController
     {
         $alunoDAO = new alunoDAO();
         $resultado = $alunoDAO->consultar($params[1]);
+        $alunos = $alunoDAO->consultarTodos();
         $dados = $this->consultarTurmas();
         require_once ("../src/Views/aluno/alterar_aluno.php");
     }
@@ -81,9 +82,14 @@ class AlunoController
     {
         $aluno = new Aluno($_POST['id'], $_POST['nome'], $_POST['turma']);
         $alunoDAO = new AlunoDAO();
+        session_start();
+        $_SESSION['idantigo']=$_POST['idoriginal'];
         if ($alunoDAO->alterar($aluno)) {
+
             header("location: /aluno/alterar/true");
+
         } else {
+
             header("location: /aluno/alterar/false");
         }
     }

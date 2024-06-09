@@ -29,12 +29,14 @@ class ProfessorDAO{
 
     public function alterar(Professor $professor){
         try{
-            $sql = "UPDATE professor SET nome = :nome, materia = :materia
-                    WHERE id = :id";
+            $sql = "UPDATE professor SET id = :idnovo, nome = :nome, materia = :materia
+                    WHERE id = :idantigo";
             $p = $this->conexao->getConexao()->prepare($sql);
-            $p->bindValue(":id", $professor->getId());
+            $p->bindValue(":idnovo", $professor->getId());
             $p->bindValue(":nome", $professor->getNome());
             $p->bindValue(":materia", $professor->getMateria());
+            $p->bindValue(":idantigo",$_SESSION['idantigo']);
+            unset($_SESSION['idantigo']);
             return $p->execute();
         }catch(\Exception $e){
             return 0;

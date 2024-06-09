@@ -41,7 +41,9 @@ class ProfessorController
 
     public function inserir($params)
     {
-        require_once ("../src/Views/professor/inserir_professor.html");
+        $professorDAO = new ProfessorDAO;
+        $dados = $professorDAO->consultarTodos();
+        require_once ("../src/Views/professor/inserir_professor.php");
     }
 
     public function novo($params)
@@ -64,6 +66,8 @@ class ProfessorController
     {
         $professor = new Professor($_POST['id'], $_POST['nome'], $_POST['materia']);
         $professorDAO = new professorDAO();
+        session_start();
+        $_SESSION['idantigo']=$_POST['idoriginal'];
         if ($professorDAO->alterar($professor)) {
             header("location: /professor/alterar/true");
         } else {

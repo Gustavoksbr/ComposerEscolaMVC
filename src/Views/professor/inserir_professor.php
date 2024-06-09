@@ -17,7 +17,20 @@
 
                 <div class="col-6">
                     <label for="id" class="form-label">ID:</label>
-                    <input type="number" name="id" class="form-control">
+                    <select name="id" class="form-control">
+                    <option selected value="" >Selecione</option>
+                        <?php
+                    $listaid = [];
+                    foreach ($dados as $d) { #$dados foi uma variavel definida no controller
+                        array_push($listaid, $d['id']);
+                    }
+                    for ($i = 1; $i <= 1000; $i++) {
+                        if (!in_array($i, $listaid)) {
+                            echo "<option>{$i}</option>";
+                        }
+                    }
+                    ?>
+                    </select>
                 </div>
                 <div class="col-6">
                     <label for="nome" class="form-label">Nome:</label>

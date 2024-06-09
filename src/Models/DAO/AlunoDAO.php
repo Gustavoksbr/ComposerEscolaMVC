@@ -29,12 +29,14 @@ class AlunoDAO{
     
     public function alterar(Aluno $aluno){
         try{
-            $sql = "UPDATE aluno SET nome = :nome, turma = :turma
-                    WHERE id = :id";
+            $sql = "UPDATE aluno SET id = :idnovo, nome = :nome, turma = :turma
+                    WHERE id = :idantigo";
             $p = $this->conexao->getConexao()->prepare($sql);
-            $p->bindValue(":id", $aluno->getId());
+            $p->bindValue(":idnovo", $aluno->getId());
             $p->bindValue(":nome", $aluno->getNome());
             $p->bindValue(":turma", $aluno->getTurma());
+            $p->bindValue(":idantigo",$_SESSION['idantigo']);
+            unset($_SESSION['idantigo']);
             return $p->execute();
         }catch(\Exception $e){
             return 0;
